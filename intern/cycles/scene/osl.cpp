@@ -921,7 +921,7 @@ void OSLCompiler::parameter(ShaderNode *node, const char *name)
     }
     case SocketType::FLOAT: {
       float value = node->get_float(socket);
-      ss->Parameter(uname, TypeDesc::TypeFloat, &value);
+      ss->Parameter(uname, TypeFloat, &value);
       break;
     }
     case SocketType::INT: {
@@ -931,22 +931,22 @@ void OSLCompiler::parameter(ShaderNode *node, const char *name)
     }
     case SocketType::COLOR: {
       float3 value = node->get_float3(socket);
-      ss->Parameter(uname, TypeDesc::TypeColor, &value);
+      ss->Parameter(uname, TypeColor, &value);
       break;
     }
     case SocketType::VECTOR: {
       float3 value = node->get_float3(socket);
-      ss->Parameter(uname, TypeDesc::TypeVector, &value);
+      ss->Parameter(uname, TypeVector, &value);
       break;
     }
     case SocketType::POINT: {
       float3 value = node->get_float3(socket);
-      ss->Parameter(uname, TypeDesc::TypePoint, &value);
+      ss->Parameter(uname, TypePoint, &value);
       break;
     }
     case SocketType::NORMAL: {
       float3 value = node->get_float3(socket);
-      ss->Parameter(uname, TypeDesc::TypeNormal, &value);
+      ss->Parameter(uname, TypeNormal, &value);
       break;
     }
     case SocketType::POINT2: {
@@ -968,7 +968,7 @@ void OSLCompiler::parameter(ShaderNode *node, const char *name)
       Transform value = node->get_transform(socket);
       ProjectionTransform projection(value);
       projection = projection_transpose(projection);
-      ss->Parameter(uname, TypeDesc::TypeMatrix, &projection);
+      ss->Parameter(uname, TypeMatrix, &projection);
       break;
     }
     case SocketType::BOOLEAN_ARRAY: {
@@ -982,7 +982,7 @@ void OSLCompiler::parameter(ShaderNode *node, const char *name)
     }
     case SocketType::FLOAT_ARRAY: {
       const array<float> &value = node->get_float_array(socket);
-      ss->Parameter(uname, array_typedesc(TypeDesc::TypeFloat, value.size()), value.data());
+      ss->Parameter(uname, array_typedesc(TypeFloat, value.size()), value.data());
       break;
     }
     case SocketType::INT_ARRAY: {
@@ -998,16 +998,16 @@ void OSLCompiler::parameter(ShaderNode *node, const char *name)
 
       switch (socket.type) {
         case SocketType::COLOR_ARRAY:
-          typedesc = TypeDesc::TypeColor;
+          typedesc = TypeColor;
           break;
         case SocketType::VECTOR_ARRAY:
-          typedesc = TypeDesc::TypeVector;
+          typedesc = TypeVector;
           break;
         case SocketType::POINT_ARRAY:
-          typedesc = TypeDesc::TypePoint;
+          typedesc = TypePoint;
           break;
         case SocketType::NORMAL_ARRAY:
-          typedesc = TypeDesc::TypeNormal;
+          typedesc = TypeNormal;
           break;
         default:
           assert(0);
@@ -1045,7 +1045,7 @@ void OSLCompiler::parameter(ShaderNode *node, const char *name)
       for (size_t i = 0; i < value.size(); i++) {
         fvalue[i] = projection_transpose(ProjectionTransform(value[i]));
       }
-      ss->Parameter(uname, array_typedesc(TypeDesc::TypeMatrix, fvalue.size()), fvalue.data());
+      ss->Parameter(uname, array_typedesc(TypeMatrix, fvalue.size()), fvalue.data());
       break;
     }
     case SocketType::CLOSURE:
@@ -1061,27 +1061,27 @@ void OSLCompiler::parameter(ShaderNode *node, const char *name)
 
 void OSLCompiler::parameter(const char *name, float f)
 {
-  ss->Parameter(name, TypeDesc::TypeFloat, &f);
+  ss->Parameter(name, TypeFloat, &f);
 }
 
 void OSLCompiler::parameter_color(const char *name, float3 f)
 {
-  ss->Parameter(name, TypeDesc::TypeColor, &f);
+  ss->Parameter(name, TypeColor, &f);
 }
 
 void OSLCompiler::parameter_point(const char *name, float3 f)
 {
-  ss->Parameter(name, TypeDesc::TypePoint, &f);
+  ss->Parameter(name, TypePoint, &f);
 }
 
 void OSLCompiler::parameter_normal(const char *name, float3 f)
 {
-  ss->Parameter(name, TypeDesc::TypeNormal, &f);
+  ss->Parameter(name, TypeNormal, &f);
 }
 
 void OSLCompiler::parameter_vector(const char *name, float3 f)
 {
-  ss->Parameter(name, TypeDesc::TypeVector, &f);
+  ss->Parameter(name, TypeVector, &f);
 }
 
 void OSLCompiler::parameter(const char *name, int f)
@@ -1104,12 +1104,12 @@ void OSLCompiler::parameter(const char *name, const Transform &tfm)
 {
   ProjectionTransform projection(tfm);
   projection = projection_transpose(projection);
-  ss->Parameter(name, TypeDesc::TypeMatrix, (float *)&projection);
+  ss->Parameter(name, TypeMatrix, (float *)&projection);
 }
 
 void OSLCompiler::parameter_array(const char *name, const float f[], int arraylen)
 {
-  TypeDesc type = TypeDesc::TypeFloat;
+  TypeDesc type = TypeFloat;
   type.arraylen = arraylen;
   ss->Parameter(name, type, f);
 }
@@ -1125,7 +1125,7 @@ void OSLCompiler::parameter_color_array(const char *name, const array<float3> &f
     table[i][2] = f[i].z;
   }
 
-  TypeDesc type = TypeDesc::TypeColor;
+  TypeDesc type = TypeColor;
   type.arraylen = table.size();
   ss->Parameter(name, type, table.data());
 }

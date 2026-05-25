@@ -426,8 +426,8 @@ static bool set_attribute_float2(float2 f[3], TypeDesc type, bool derivatives, v
     }
     return true;
   }
-  else if (type == TypeDesc::TypePoint || type == TypeDesc::TypeVector ||
-           type == TypeDesc::TypeNormal || type == TypeDesc::TypeColor)
+  else if (type == TypePoint || type == TypeVector ||
+           type == TypeNormal || type == TypeColor)
   {
     float *fval = (float *)val;
 
@@ -447,7 +447,7 @@ static bool set_attribute_float2(float2 f[3], TypeDesc type, bool derivatives, v
 
     return true;
   }
-  else if (type == TypeDesc::TypeFloat) {
+  else if (type == TypeFloat) {
     float *fval = (float *)val;
     fval[0] = average(f[0]);
 
@@ -497,8 +497,8 @@ static bool set_attribute_float3(float3 f[3], TypeDesc type, bool derivatives, v
     }
     return true;
   }
-  else if (type == TypeDesc::TypePoint || type == TypeDesc::TypeVector ||
-           type == TypeDesc::TypeNormal || type == TypeDesc::TypeColor)
+  else if (type == TypePoint || type == TypeVector ||
+           type == TypeNormal || type == TypeColor)
   {
     float *fval = (float *)val;
 
@@ -518,7 +518,7 @@ static bool set_attribute_float3(float3 f[3], TypeDesc type, bool derivatives, v
 
     return true;
   }
-  else if (type == TypeDesc::TypeFloat) {
+  else if (type == TypeFloat) {
     float *fval = (float *)val;
     fval[0] = average(f[0]);
 
@@ -574,8 +574,8 @@ static bool set_attribute_float4(float4 f[3], TypeDesc type, bool derivatives, v
     }
     return true;
   }
-  else if (type == TypeDesc::TypePoint || type == TypeDesc::TypeVector ||
-           type == TypeDesc::TypeNormal || type == TypeDesc::TypeColor)
+  else if (type == TypePoint || type == TypeVector ||
+           type == TypeNormal || type == TypeColor)
   {
     fval[0] = f[0].x;
     fval[1] = f[0].y;
@@ -592,7 +592,7 @@ static bool set_attribute_float4(float4 f[3], TypeDesc type, bool derivatives, v
     }
     return true;
   }
-  else if (type == TypeDesc::TypeFloat) {
+  else if (type == TypeFloat) {
     fval[0] = average(float4_to_float3(f[0]));
 
     if (derivatives) {
@@ -639,8 +639,8 @@ static bool set_attribute_float(float f[3], TypeDesc type, bool derivatives, voi
     }
     return true;
   }
-  else if (type == TypeDesc::TypePoint || type == TypeDesc::TypeVector ||
-           type == TypeDesc::TypeNormal || type == TypeDesc::TypeColor)
+  else if (type == TypePoint || type == TypeVector ||
+           type == TypeNormal || type == TypeColor)
   {
     float *fval = (float *)val;
     fval[0] = f[0];
@@ -659,7 +659,7 @@ static bool set_attribute_float(float f[3], TypeDesc type, bool derivatives, voi
 
     return true;
   }
-  else if (type == TypeDesc::TypeFloat) {
+  else if (type == TypeFloat) {
     float *fval = (float *)val;
     fval[0] = f[0];
 
@@ -750,7 +750,7 @@ static bool set_attribute_float3_3(float3 P[3], TypeDesc type, bool derivatives,
 
 static bool set_attribute_matrix(const Transform &tfm, TypeDesc type, void *val)
 {
-  if (type == TypeDesc::TypeMatrix) {
+  if (type == TypeMatrix) {
     copy_matrix(*(OSL::Matrix44 *)val, tfm);
     return true;
   }

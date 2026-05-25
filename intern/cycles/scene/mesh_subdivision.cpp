@@ -253,7 +253,7 @@ class OsdData {
       for (int i = 0; i < refiner->GetMaxLevel(); i++) {
         char *dest = src + refiner->GetLevel(i).GetNumVertices() * attr.data_sizeof();
 
-        if (attr.same_storage(attr.type, TypeDesc::TypeFloat)) {
+        if (attr.same_storage(attr.type, TypeFloat)) {
           primvar_refiner.Interpolate(i + 1, (OsdValue<float> *)src, (OsdValue<float> *&)dest);
         }
         else if (attr.same_storage(attr.type, TypeFloat2)) {
@@ -272,7 +272,7 @@ class OsdData {
       }
 
       if (num_local_points) {
-        if (attr.same_storage(attr.type, TypeDesc::TypeFloat)) {
+        if (attr.same_storage(attr.type, TypeFloat)) {
           patch_table->ComputeLocalPointValues(
               (OsdValue<float> *)&attr.buffer[0],
               (OsdValue<float> *)&attr.buffer[num_refiner_verts * attr.data_sizeof()]);

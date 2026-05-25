@@ -164,7 +164,8 @@ class GPUShaderCreator : public OCIO::GpuShaderCreator {
 
   bool addUniform(const char *name,
                   const SizeGetter &get_size,
-                  const VectorFloatGetter &get_vector_float) override
+                  const VectorFloatGetter &get_vector_float,
+                  const unsigned maxSize) override
   {
     /* Check if a resource exists with the same name and assert if it is the case, returning false
      * indicates failure to add the uniform for the shader creator. */
@@ -186,7 +187,8 @@ class GPUShaderCreator : public OCIO::GpuShaderCreator {
 
   bool addUniform(const char *name,
                   const SizeGetter &get_size,
-                  const VectorIntGetter &get_vector_int) override
+                  const VectorIntGetter &get_vector_int,
+                  const unsigned maxSize) override
   {
     /* Check if a resource exists with the same name and assert if it is the case, returning false
      * indicates failure to add the uniform for the shader creator. */
@@ -206,7 +208,7 @@ class GPUShaderCreator : public OCIO::GpuShaderCreator {
     return true;
   }
 
-  void addTexture(const char *texture_name,
+  unsigned addTexture(const char *texture_name,
                   const char *sampler_name,
                   unsigned width,
                   unsigned height,
@@ -246,9 +248,11 @@ class GPUShaderCreator : public OCIO::GpuShaderCreator {
     GPU_texture_filter_mode(texture, interpolation != OCIO::INTERP_NEAREST);
 
     textures_.add(sampler_name, texture);
+
+    return 0;
   }
 
-  void add3DTexture(const char *texture_name,
+  unsigned add3DTexture(const char *texture_name,
                     const char *sampler_name,
                     unsigned size,
                     OCIO::Interpolation interpolation,
@@ -269,6 +273,7 @@ class GPUShaderCreator : public OCIO::GpuShaderCreator {
     GPU_texture_filter_mode(texture, interpolation != OCIO::INTERP_NEAREST);
 
     textures_.add(sampler_name, texture);
+    return 0;
   }
 
   /* This gets called before the finalize() method to construct the shader code. We just
@@ -276,6 +281,7 @@ class GPUShaderCreator : public OCIO::GpuShaderCreator {
    * will add the declaration itself. */
   void createShaderText(const char *declarations,
                         const char *helper_methods,
+                        const char *texture_declarations,
                         const char *function_header,
                         const char *function_body,
                         const char *function_footer) override
