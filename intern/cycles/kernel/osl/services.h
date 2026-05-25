@@ -73,7 +73,7 @@ struct OSLTextureHandle : public OIIO::RefCnt {
 };
 
 typedef OIIO::intrusive_ptr<OSLTextureHandle> OSLTextureHandleRef;
-typedef OIIO::unordered_map_concurrent<ustring, OSLTextureHandleRef, ustringHash>
+typedef OIIO::unordered_map_concurrent<ustring, OSLTextureHandleRef, std::hash<ustring>>
     OSLTextureHandleMap;
 
 /* OSL Render Services

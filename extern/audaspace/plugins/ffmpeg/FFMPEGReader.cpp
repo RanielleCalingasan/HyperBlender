@@ -71,7 +71,7 @@ int FFMPEGReader::decode(AVPacket& packet, Buffer& buffer)
 
 		if(got_frame)
 		{
-			int data_size = av_samples_get_buffer_size(nullptr, m_codecCtx->channels, m_frame->nb_samples, m_codecCtx->sample_fmt, 1);
+			int data_size = av_samples_get_buffer_size(nullptr, m_codecCtx->ch_layout.nb_channels, m_frame->nb_samples, m_codecCtx->sample_fmt, 1);
 
 			if(buf_size - buf_pos < data_size)
 			{
@@ -81,12 +81,12 @@ int FFMPEGReader::decode(AVPacket& packet, Buffer& buffer)
 
 			if(m_tointerleave)
 			{
-				int single_size = data_size / m_codecCtx->channels / m_frame->nb_samples;
-				for(int channel = 0; channel < m_codecCtx->channels; channel++)
+				int single_size = data_size / m_codecCtx->ch_layout.nb_channels / m_frame->nb_samples;
+				for(int channel = 0; channel < m_codecCtx->ch_layout.nb_channels; channel++)
 				{
 					for(int i = 0; i < m_frame->nb_samples; i++)
 					{
-						std::memcpy(((data_t*)buffer.getBuffer()) + buf_pos + ((m_codecCtx->channels * i) + channel) * single_size,
+						std::memcpy(((data_t*)buffer.getBuffer()) + buf_pos + ((m_codecCtx->ch_layout.nb_channels * i) + channel) * single_size,
 							   m_frame->data[channel] + i * single_size, single_size);
 					}
 				}
@@ -112,7 +112,7 @@ int FFMPEGReader::decode(AVPacket& packet, Buffer& buffer)
 		if(ret != 0)
 			break;
 
-		int data_size = av_samples_get_buffer_size(nullptr, m_codecCtx->channels, m_frame->nb_samples, m_codecCtx->sample_fmt, 1);
+		int data_size = av_samples_get_buffer_size(nullptr, m_codecCtx->ch_layout.nb_channels, m_frame->nb_samples, m_codecCtx->sample_fmt, 1);
 
 		if(buf_size - buf_pos < data_size)
 		{
@@ -122,12 +122,12 @@ int FFMPEGReader::decode(AVPacket& packet, Buffer& buffer)
 
 		if(m_tointerleave)
 		{
-			int single_size = data_size / m_codecCtx->channels / m_frame->nb_samples;
-			for(int channel = 0; channel < m_codecCtx->channels; channel++)
+			int single_size = data_size / m_codecCtx->ch_layout.nb_channels / m_frame->nb_samples;
+			for(int channel = 0; channel < m_codecCtx->ch_layout.nb_channels; channel++)
 			{
 				for(int i = 0; i < m_frame->nb_samples; i++)
 				{
-					std::memcpy(((data_t*)buffer.getBuffer()) + buf_pos + ((m_codecCtx->channels * i) + channel) * single_size,
+					std::memcpy(((data_t*)buffer.getBuffer()) + buf_pos + ((m_codecCtx->ch_layout.nb_channels * i) + channel) * single_size,
 						   m_frame->data[channel] + i * single_size, single_size);
 				}
 			}
@@ -207,7 +207,7 @@ void FFMPEGReader::init(int stream)
 	if(avcodec_open2(m_codecCtx, aCodec, nullptr) < 0)
 		AUD_THROW(FileException, "File couldn't be read, ffmpeg codec couldn't be opened.");
 
-	m_specs.channels = (Channels) m_codecCtx->channels;
+	m_specs.channels = (Channels) m_codecCtx->ch_layout.nb_channels;
 	m_tointerleave = av_sample_fmt_is_planar(m_codecCtx->sample_fmt);
 
 	switch(av_get_packed_sample_fmt(m_codecCtx->sample_fmt))
@@ -269,9 +269,9 @@ FFMPEGReader::FFMPEGReader(std::shared_ptr<Buffer> buffer, int stream) :
 		m_membuffer(buffer),
 		m_membufferpos(0)
 {
-	m_membuf = reinterpret_cast<data_t*>(av_malloc(AV_INPUT_BUFFER_MIN_SIZE + AV_INPUT_BUFFER_PADDING_SIZE));
+	m_membuf = reinterpret_cast<data_t*>(av_malloc(16384 + AV_INPUT_BUFFER_PADDING_SIZE));
 
-	m_aviocontext = avio_alloc_context(m_membuf, AV_INPUT_BUFFER_MIN_SIZE, 0, this, read_packet, nullptr, seek_packet);
+	m_aviocontext = avio_alloc_context(m_membuf, 16384, 0, this, read_packet, nullptr, seek_packet);
 
 	if(!m_aviocontext)
 	{
@@ -341,11 +341,11 @@ std::vector<StreamInfo> FFMPEGReader::queryStreams()
 				info.duration = 0;
 
 #ifdef FFMPEG_OLD_CODE
-			info.specs.channels = Channels(m_formatCtx->streams[i]->codec->channels);
+			info.specs.channels = Channels(m_formatCtx->streams[i]->codec->ch_layout.nb_channels);
 			info.specs.rate = m_formatCtx->streams[i]->codec->sample_rate;
 			info.specs.format = convertSampleFormat(m_formatCtx->streams[i]->codec->sample_fmt);
 #else
-			info.specs.channels = Channels(m_formatCtx->streams[i]->codecpar->channels);
+			info.specs.channels = Channels(m_formatCtx->streams[i]->codecpar->ch_layout.nb_channels);
 			info.specs.rate = m_formatCtx->streams[i]->codecpar->sample_rate;
 			info.specs.format = convertSampleFormat(AVSampleFormat(m_formatCtx->streams[i]->codecpar->format));
 #endif

@@ -47,17 +47,17 @@ struct NodeEnum {
     return right.find(y)->second;
   }
 
-  unordered_map<ustring, int, ustringHash>::const_iterator begin() const
+  unordered_map<ustring, int, std::hash<ustring>>::const_iterator begin() const
   {
     return left.begin();
   }
-  unordered_map<ustring, int, ustringHash>::const_iterator end() const
+  unordered_map<ustring, int, std::hash<ustring>>::const_iterator end() const
   {
     return left.end();
   }
 
  private:
-  unordered_map<ustring, int, ustringHash> left;
+  unordered_map<ustring, int, std::hash<ustring>> left;
   unordered_map<int, ustring> right;
 };
 

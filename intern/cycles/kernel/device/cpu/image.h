@@ -701,7 +701,7 @@ template<typename TexT, typename OutT = float4> struct NanoVDBInterpolator {
                                                   float z)
   {
     const nanovdb::Vec3f xyz(x, y, z);
-    return read(nanovdb::SampleFromVoxels<AccessorType, 0, false>(acc)(xyz));
+    return read(nanovdb::math::SampleFromVoxels<AccessorType, 0, false>(acc)(xyz));
   }
 
   static ccl_always_inline OutT interp_3d_linear(const AccessorType &acc,
@@ -710,7 +710,7 @@ template<typename TexT, typename OutT = float4> struct NanoVDBInterpolator {
                                                  float z)
   {
     const nanovdb::Vec3f xyz(x - 0.5f, y - 0.5f, z - 0.5f);
-    return read(nanovdb::SampleFromVoxels<AccessorType, 1, false>(acc)(xyz));
+    return read(nanovdb::math::SampleFromVoxels<AccessorType, 1, false>(acc)(xyz));
   }
 
   /* Tricubic b-spline interpolation. */

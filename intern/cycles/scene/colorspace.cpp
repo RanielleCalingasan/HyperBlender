@@ -27,8 +27,8 @@ ustring u_colorspace_srgb("__builtin_srgb");
 #ifdef WITH_OCIO
 static thread_mutex cache_colorspaces_mutex;
 static thread_mutex cache_processors_mutex;
-static unordered_map<ustring, ustring, ustringHash> cached_colorspaces;
-static unordered_map<ustring, OCIO::ConstProcessorRcPtr, ustringHash> cached_processors;
+static unordered_map<ustring, ustring, std::hash<ustring>> cached_colorspaces;
+static unordered_map<ustring, OCIO::ConstProcessorRcPtr, std::hash<ustring>> cached_processors;
 #endif
 
 ColorSpaceProcessor *ColorSpaceManager::get_processor(ustring colorspace)

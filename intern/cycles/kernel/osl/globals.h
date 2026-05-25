@@ -60,7 +60,7 @@ struct OSLGlobals {
   OSL::ShaderGroupRef background_state;
 
   /* attributes */
-  typedef unordered_map<ustring, int, ustringHash> ObjectNameMap;
+  typedef unordered_map<ustring, int, std::hash<ustring>> ObjectNameMap;
 
   ObjectNameMap object_name_map;
   vector<ustring> object_names;
