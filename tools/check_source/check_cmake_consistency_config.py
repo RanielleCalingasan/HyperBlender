@@ -98,7 +98,7 @@ IGNORE_SOURCE_MISSING = (
     (   # Use for `WITH_NANOVDB`.
         "intern/cycles/kernel/CMakeLists.txt", (
             "nanovdb/util/CSampleFromVoxels.h",
-            "nanovdb/util/SampleFromVoxels.h",
+            "nanovdb/math/SampleFromVoxels.h",
             "nanovdb/NanoVDB.h",
             "nanovdb/CNanoVDB.h",
         ),

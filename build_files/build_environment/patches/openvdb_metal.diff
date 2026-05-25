@@ -5866,10 +5866,10 @@ index fde5c47..cff460a 100644
  } // namespace io
  
  #endif// if !defined(__CUDA_ARCH__) && !defined(__HIP__)
-diff --git a/nanovdb/nanovdb/util/SampleFromVoxels.h b/nanovdb/nanovdb/util/SampleFromVoxels.h
+diff --git a/nanovdb/nanovdb/math/SampleFromVoxels.h b/nanovdb/nanovdb/math/SampleFromVoxels.h
 index e779d66..e2f9283 100644
---- a/nanovdb/nanovdb/util/SampleFromVoxels.h
-+++ b/nanovdb/nanovdb/util/SampleFromVoxels.h
+--- a/nanovdb/nanovdb/math/SampleFromVoxels.h
++++ b/nanovdb/nanovdb/math/SampleFromVoxels.h
 @@ -1,983 +1,1120 @@
 -// Copyright Contributors to the OpenVDB Project
 -// SPDX-License-Identifier: MPL-2.0

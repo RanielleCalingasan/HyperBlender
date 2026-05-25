@@ -6,7 +6,7 @@
 #ifdef WITH_NANOVDB
 #  define NANOVDB_USE_INTRINSICS
 #  include <nanovdb/NanoVDB.h>
-#  include <nanovdb/util/SampleFromVoxels.h>
+#  include <nanovdb/math/SampleFromVoxels.h>
 #endif
 
 CCL_NAMESPACE_BEGIN

@@ -1238,8 +1238,8 @@ if(WITH_NANOVDB)
     nanovdb/CNanoVDB.h
   )
   set(SRC_NANOVDB_UTIL_HEADERS
-    nanovdb/util/CSampleFromVoxels.h
-    nanovdb/util/SampleFromVoxels.h
+    nanovdb/CSampleFromVoxels.h
+    nanovdb/math/SampleFromVoxels.h
   )
   delayed_install(${NANOVDB_INCLUDE_DIR} "${SRC_NANOVDB_HEADERS}" ${CYCLES_INSTALL_PATH}/source/nanovdb)
   delayed_install(${NANOVDB_INCLUDE_DIR} "${SRC_NANOVDB_UTIL_HEADERS}" ${CYCLES_INSTALL_PATH}/source/nanovdb/util)

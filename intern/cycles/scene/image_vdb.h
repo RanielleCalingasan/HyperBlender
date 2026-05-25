@@ -8,7 +8,7 @@
 #  include <openvdb/openvdb.h>
 #endif
 #ifdef WITH_NANOVDB
-#  include <nanovdb/util/GridHandle.h>
+#  include <nanovdb/GridHandle.h>
 #endif
 
 #include "scene/image.h"

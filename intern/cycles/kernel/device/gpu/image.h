@@ -10,7 +10,7 @@ CCL_NAMESPACE_BEGIN
 #    define NDEBUG /* Disable "assert" in device code */
 #    define NANOVDB_USE_INTRINSICS
 #    include "nanovdb/NanoVDB.h"
-#    include "nanovdb/util/SampleFromVoxels.h"
+#    include "nanovdb/math/SampleFromVoxels.h"
 #  endif
 #endif
 /* w0, w1, w2, and w3 are the four cubic B-spline basis functions. */

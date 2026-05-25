@@ -10,7 +10,7 @@
 #  include <openvdb/tools/Dense.h>
 #endif
 #ifdef WITH_NANOVDB
-#  include <nanovdb/util/OpenToNanoVDB.h>
+#  include <nanovdb/OpenToNanoVDB.h>
 #endif
 
 CCL_NAMESPACE_BEGIN
