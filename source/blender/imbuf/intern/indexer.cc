@@ -1080,7 +1080,7 @@ static int index_rebuild_ffmpeg(FFmpegIndexBuilderContext *context,
           context->last_seek_pos_pts = context->seek_pos_pts;
           context->last_seek_pos_dts = context->seek_pos_dts;
 
-          context->seek_pos = in_frame->pkt_pos;
+          context->seek_pos = -1;
           context->seek_pos_pts = in_frame->pts;
           context->seek_pos_dts = in_frame->pkt_dts;
         }
