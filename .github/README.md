@@ -4,8 +4,9 @@ A custom Blender Fork Aiming for Maximum Performance.
 
 Requirements
 =======
+-
 AMD(RX 400-500 Minimum) or Nvidia GPU(Pascal Minimum)
-=======
+-
 CPU must support AVX2, BMI2, and FMA3 extensions
 
 License
