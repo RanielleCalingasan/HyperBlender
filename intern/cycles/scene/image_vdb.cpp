@@ -10,7 +10,7 @@
 #  include <openvdb/tools/Dense.h>
 #endif
 #ifdef WITH_NANOVDB
-#  include <nanovdb/OpenToNanoVDB.h>
+#  include <nanovdb/tools/CreateNanoGrid.h>
 #endif
 
 CCL_NAMESPACE_BEGIN
@@ -54,20 +54,20 @@ struct ToNanoOp {
         FloatGridType floatgrid(*openvdb::gridConstPtrCast<GridType>(grid));
         if constexpr (std::is_same_v<FloatGridType, openvdb::FloatGrid>) {
           if (precision == 0) {
-            nanogrid = nanovdb::openToNanoVDB<nanovdb::HostBuffer,
+            nanogrid = nanovdb::tools::openToNanoVDB<nanovdb::HostBuffer,
                                               typename FloatGridType::TreeType,
                                               nanovdb::FpN>(floatgrid);
             return true;
           }
           else if (precision == 16) {
-            nanogrid = nanovdb::openToNanoVDB<nanovdb::HostBuffer,
+            nanogrid = nanovdb::tools::openToNanoVDB<nanovdb::HostBuffer,
                                               typename FloatGridType::TreeType,
                                               nanovdb::Fp16>(floatgrid);
             return true;
           }
         }
 
-        nanogrid = nanovdb::openToNanoVDB(floatgrid);
+        nanogrid = nanovdb::tools::openToNanoVDB(floatgrid);
       }
       catch (const std::exception &e) {
         VLOG_WARNING << "Error converting OpenVDB to NanoVDB grid: " << e.what();
@@ -116,7 +116,7 @@ bool VDBImageLoader::load_metadata(const ImageDeviceFeatures &features, ImageMet
 #    if 0
     openvdb::FloatGrid &pruned_grid = *openvdb::gridPtrCast<openvdb::FloatGrid>(grid);
     openvdb::tools::pruneInactive(pruned_grid.tree());
-    nanogrid = nanovdb::openToNanoVDB(pruned_grid);
+    nanogrid = nanovdb::tools::openToNanoVDB(pruned_grid);
 #    endif
     ToNanoOp op;
     op.precision = precision;
