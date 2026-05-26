@@ -54,20 +54,20 @@ struct ToNanoOp {
         FloatGridType floatgrid(*openvdb::gridConstPtrCast<GridType>(grid));
         if constexpr (std::is_same_v<FloatGridType, openvdb::FloatGrid>) {
           if (precision == 0) {
-            nanogrid = nanovdb::tools::openToNanoVDB<nanovdb::HostBuffer,
-                                              typename FloatGridType::TreeType,
-                                              nanovdb::FpN>(floatgrid);
+            nanogrid = nanovdb::tools::createNanoGrid<FloatGridType,
+                                              nanovdb::FpN,
+                                              nanovdb::HostBuffer>(floatgrid);
             return true;
           }
           else if (precision == 16) {
-            nanogrid = nanovdb::tools::openToNanoVDB<nanovdb::HostBuffer,
-                                              typename FloatGridType::TreeType,
-                                              nanovdb::Fp16>(floatgrid);
+            nanogrid = nanovdb::tools::createNanoGrid<FloatGridType,
+                                              nanovdb::Fp16,
+                                              nanovdb::HostBuffer>(floatgrid);
             return true;
           }
         }
 
-        nanogrid = nanovdb::tools::openToNanoVDB(floatgrid);
+        nanogrid = nanovdb::tools::createNanoGrid(floatgrid);
       }
       catch (const std::exception &e) {
         VLOG_WARNING << "Error converting OpenVDB to NanoVDB grid: " << e.what();
