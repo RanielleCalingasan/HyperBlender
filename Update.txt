@@ -1,0 +1,13 @@
+Compile with this Cmake for now This is for testing purposes using this as a stable version is not recommended
+cmake -S ~/blender-git/HyperBlender \
+            -B ~/blender-git/build_hyperblender \
+            -DWITH_OPENVDB=OFF \
+            -DWITH_NANOVDB=OFF \
+            -DWITH_AUDASPACE=OFF \
+            -DWITH_PYTHON_NUMPY=OFF \
+            -DWITH_PYTHON_INSTALL_NUMPY=OFF \
+            -DWITH_MOD_FLUID=OFF
+
+
+5/26/26
+Fixes the Compatibility Issue between New Packages to ensure Compatibility in blender 3.6
